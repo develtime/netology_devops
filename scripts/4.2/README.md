@@ -124,7 +124,7 @@
             print(f'[ERROR]: "{hostname}" IP mismatch: {latest[hostname][0]} {host_info[-1][0]}')
 
     # Save new history
-    with open('servers.json', 'w') as outfile:
+    with open(hist_name, 'w') as outfile:
         json.dump(current, outfile)
    ```
 
