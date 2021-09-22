@@ -9,4 +9,4 @@
 2. Создание ec2 через терраформ
 
    1. Packer
-   2. [Terraform configuration](../../terraform)
+   2. [Terraform configuration](../../terraform/7.2)
