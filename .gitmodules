@@ -1,0 +1,4 @@
+[submodule "golang"]
+	path = go
+	url = git@github.com:develtime/go.git
+	branch = main
