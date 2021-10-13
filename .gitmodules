@@ -2,3 +2,7 @@
 	path = go
 	url = git@github.com:develtime/go.git
 	branch = main
+[submodule "ansible"]
+	path = ansible
+	url = git@github.com:develtime/ansible.git
+	branch = main
