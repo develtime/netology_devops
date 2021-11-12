@@ -71,7 +71,7 @@
 
    RUN npm install
 
-   ENTRYPOINT ["node", "app.js", "0.0.0.0", "3000"]
+   ENTRYPOINT ["node", "app.js", "0.0.0.0", "3"]
    ```
 
    ```dockerfile
@@ -88,7 +88,7 @@
     $ docker build -t develtime/simplicite_netology -f Dockerfile_nodejs .
     $ docker build -t develtime/simplicite_ubuntu -f Dockerfile_ubuntu .
     $ docker network create -d bridge netology_bridge
-    $ docker run --name simplicite_netology -d -p 3000:3000 --network netology_bridge develtime/simplicite_netology:latest
+    $ docker run --name simplicite_netology -d -p 3:3 --network netology_bridge develtime/simplicite_netology:latest
     $ docker run --name simplicite_ubuntu -dit --network netology_bridge develtime/simplicite_ubuntu:latest
    ```
 
@@ -101,7 +101,7 @@
    ```
 
    ```bash
-   $ curl simplicite_netology:3000
+   $ curl simplicite_netology:3
    ```
 
    ![simplecite](img/curl_simplecit.png)

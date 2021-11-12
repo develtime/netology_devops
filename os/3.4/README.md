@@ -35,8 +35,8 @@
 
     ```
     ...
-    [0.000000] DMI: innotek GmbH VirtualBox/VirtualBox, BIOS VirtualBox 12/01/2006
-    [0.000000] Hypervisor detected: KVM
+    [0.] DMI: innotek GmbH VirtualBox/VirtualBox, BIOS VirtualBox 12/01/2006
+    [0.] Hypervisor detected: KVM
     ...
     ```
 5. `fs.nr_open` - это системное значение в `sysctl`, его значение можно получить из `sysctl -n fs.nr_open` оно отвечает за кол-во открытых файлов на процесс, у `sysctl` это значение по-умолчанию равно `1048576`, но не смотря на это, данное значение не позволит достичь так называемое "мягкое" системное ограничение `open files` из команды `ulimit -a`, данное значение можно увеличить до максимального "жесткого" ограничения `ulimit -aH` так же равного `1048576`

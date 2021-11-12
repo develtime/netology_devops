@@ -31,7 +31,7 @@
    ```
 
    ```bash
-   $ ./test.sh "Hello world" 10000 > test.log &
+   $ ./test.sh "Hello world" 10 > test.log &
    $ <PID>
    $ rm -f test.log
    $ lsof -p <PID>

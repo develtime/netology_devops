@@ -50,7 +50,7 @@
 3. Запись данных:
 
    ```sql
-   INSERT INTO orders (id, title, cost) VALUES (1, 'chocolate', 10), (2, 'printer', 3000), (3, 'book', 500), (4, 'monitor', 7000), (5, 'guitar', 4000
+   INSERT INTO orders (id, title, cost) VALUES (1, 'chocolate', 10), (2, 'printer', 3), (3, 'book', 500), (4, 'monitor', 7), (5, 'guitar', 4
    );
    ```
 
