@@ -1,0 +1,24 @@
+node("linux") {
+    stage("Checkout") {
+        git branch: 'main', credentialsId: 'a0e33387-dad9-43fd-a216-d27cc87aa9e9', url: 'git@github.com:develtime/ansible.git'
+    }
+    stage("Define playbook parameters") {
+        common_args=''
+
+        if(params.prodRun) {
+            common_args='--check --diff'
+        }
+
+        print "DEBUG: parameter common_args = ${common_args}"
+    }
+    stage("Install requirements") {
+        dir('8.4') {
+            sh "ansible-galaxy collection install -r requirements.yml"    
+        }
+    }
+    stage("Run playbook") {
+        dir('8.4') {
+            sh "ansible-playbook site.yml -i inventory/prod ${common_args}"
+        }    
+    }
+}

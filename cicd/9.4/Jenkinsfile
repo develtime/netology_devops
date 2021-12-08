@@ -1,0 +1,32 @@
+pipeline {
+    agent {
+        label "linux"
+    }
+    stages {
+        stage("Checkout repository") {
+            steps {
+                git branch: 'main', url: 'https://github.com/develtime/galaxy.git'
+            }
+        }
+        stage("Prepare requirement") {
+            steps {
+                dir('develtime/services/roles/elasticsearch/') {
+                    sh 'pip3 install -r requirements.txt'    
+                }
+                dir('develtime/services/roles/elasticsearch/molecule/default/files') {
+                    writeFile file: 'README.md', text: '# Directory for downloadable files'
+                }
+                dir('develtime/services/roles/elasticsearch/molecule/light/files') {
+                    writeFile file: 'README.md', text: '# Directory for downloadable files'
+                }
+            }
+        }
+        stage("Molecule test") {
+            steps {
+                dir('develtime/services/roles/elasticsearch/') {
+                    sh 'molecule test -s light'    
+                }
+            }
+        }
+    }
+}
