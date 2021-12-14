@@ -1,0 +1,5 @@
+{'timestamp': 1639517696.851227, 'cpu': 0.02, 'cpu0': 0.03, 'cpu1': 0.02, 'cpu2': 0.0, 'cpu3': 0.03, 'cpu4': 0.03, 'cpu5': 0.03, 'mem_total': 16083860, 'mem_free': 10927876, 'mem_available': 13044340}
+{'timestamp': 1639517697.853147, 'cpu': 0.02, 'cpu0': 0.02, 'cpu1': 0.02, 'cpu2': 0.03, 'cpu3': 0.01, 'cpu4': 0.01, 'cpu5': 0.03, 'mem_total': 16083860, 'mem_free': 10928596, 'mem_available': 13045192}
+{'timestamp': 1639517758.897592, 'cpu': 0.02, 'cpu0': 0.04, 'cpu1': 0.0, 'cpu2': 0.02, 'cpu3': 0.01, 'cpu4': 0.01, 'cpu5': 0.03, 'mem_total': 16083860, 'mem_free': 10927272, 'mem_available': 13043968}
+{'timestamp': 1639517819.949674, 'cpu': 0.02, 'cpu0': 0.01, 'cpu1': 0.01, 'cpu2': 0.06, 'cpu3': 0.02, 'cpu4': 0.03, 'cpu5': 0.01, 'mem_total': 16083860, 'mem_free': 10917760, 'mem_available': 13034584}
+{'timestamp': 1639517880.999246, 'cpu': 0.02, 'cpu0': 0.03, 'cpu1': 0.03, 'cpu2': 0.02, 'cpu3': 0.03, 'cpu4': 0.02, 'cpu5': 0.02, 'mem_total': 16083860, 'mem_free': 10918032, 'mem_available': 13034924}
