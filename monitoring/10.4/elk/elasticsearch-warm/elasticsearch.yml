@@ -1,0 +1,31 @@
+# http:
+#   port: "9200"
+# path:
+#   data: /bitnami/elasticsearch/data
+# transport:
+#   tcp:
+#     port: "9300"
+network:
+  host: 0.0.0.0
+  publish_host: 0.0.0.0
+  bind_host: 0.0.0.0
+cluster:
+  name: es-cluster
+  initial_master_nodes:
+    - elasticsearch-hot
+    - elasticsearch-warm
+node:
+  name: elasticsearch-warm
+  master: "true"
+  attr.box_type: warm
+discovery:
+  seed_hosts:
+    - elasticsearch-hot
+    - elasticsearch-warm
+  initial_state_timeout: 5m
+gateway:
+  recover_after_nodes: "2"
+  expected_nodes: "2"
+xpack:
+  ml:
+    enabled: "false"
