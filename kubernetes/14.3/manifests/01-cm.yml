@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: some-config-cm
+  namespace: stage
+data:
+  name: Hello
+  value: Netology

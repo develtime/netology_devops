@@ -1,0 +1,132 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hvac-config
+  namespace: stage
+data:
+  code.py: |
+    import hvac
+    import os
+    import time
+
+    print('Start to process secret data ...')
+
+    print('This is data witch loaded by vault agent and saved to file:')
+
+    with open('/etc/from_vault/data_netology', 'r') as f:
+      print(f.read())
+
+    client = hvac.Client(
+        url='http://vault-nodeport-service:8200',
+        token=os.environ['VAULT_DEV_ROOT_TOKEN_ID']
+    )
+
+    client.is_authenticated()
+
+    client.secrets.kv.v2.create_or_update_secret(
+        path='hvac',
+        secret=dict(netology='Hello Netology'),
+    )
+
+    print('This is data witch loaded HVAC:')
+
+    while(True):
+      request = client.secrets.kv.v2.read_secret_version(
+          path='hvac',
+      )
+
+      print(f'${request["request_id"]}: ${request["data"]["data"]}')
+
+      time.sleep(10)
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vault-agent-config
+  namespace: stage
+data:
+  vault-agent.hcl: |
+    pid_file = "/tmp/.pidfile"
+
+    auto_auth {
+      mount_path = "auth/approle"
+      method "approle" {
+        config = {
+          role_id_file_path = "/etc/vault/config/app-role-id"
+        }
+      }
+    }
+
+    template {
+      contents = "{{ with secret \"data/netology\" }}{{ .Data.data.secret_value_1 }} {{ .Data.data.secret_value_2 }}{{ end }}"
+      destination = "/etc/from_vault/data_netology"
+    }
+
+    vault {
+      address = "http://vault-nodeport-service:8200"
+    }
+
+    exit_after_auth = true
+  app-role-id: |
+    8d5fa3b1-9919-d1b4-f386-416670f6baf9
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hvac
+  namespace: stage
+  labels:
+    app: hvac
+spec:
+  initContainers:
+    - name: init-app-config
+      image: vault:1.10.3
+      imagePullPolicy: IfNotPresent
+      securityContext:
+        runAsUser: 10001
+        runAsNonRoot: true
+        capabilities:
+          add:
+            - IPC_LOCK
+      args:
+        - "agent"
+        - "-config=/etc/vault/config/vault-agent.hcl"
+      env:
+        - name: SKIP_SETCAP
+          value: 'true'
+      volumeMounts:
+        - mountPath: /etc/vault/config
+          name: vault-config
+        - mountPath: /etc/from_vault
+          name: vault-data
+  containers:
+  - name: python-hvac
+    image: develtime/python3-slim-hvac:latest
+    command: ["/usr/local/bin/python"]
+    args: ["/code/code.py"]
+    env:
+      - name: VAULT_DEV_ROOT_TOKEN_ID
+        valueFrom:
+          secretKeyRef:
+            name: vault-keys
+            key: token
+    volumeMounts:
+    - name: code-volume
+      mountPath: /code
+    - name: vault-data
+      mountPath: /etc/from_vault
+  volumes:
+    - name: code-volume
+      configMap:
+        name: hvac-config
+        items:
+        - key: code.py
+          path: code.py
+    - name: vault-config
+      configMap:
+        name: vault-agent-config
+    - name: vault-data
+      emptyDir:
+        medium: Memory
+---

@@ -1,0 +1,35 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-pod
+  namespace: stage
+  labels:
+    app: example
+spec:
+  containers:
+  - name: example
+    image: praqma/network-multitool
+    env:
+      - name: ENV_NETOLOGY_1
+        valueFrom:
+          configMapKeyRef:
+            name: some-config-literal
+            key: name
+      - name: ENV_NETOLOGY_2
+        valueFrom:
+          configMapKeyRef:
+            name: some-config-literal
+            key: value
+    volumeMounts:
+    - name: example-volume
+      mountPath: /example
+  volumes:
+    - name: example-volume
+      configMap:
+        name: some-config-cm
+        items:
+        - key: name
+          path: Hello.txt
+        - key: value
+          path: Netology.txt
