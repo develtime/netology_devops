@@ -1,0 +1,56 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-frontend
+  namespace: ns-example
+  labels:
+    role: frontend
+spec:
+  containers:
+  - name: frontend
+    image: nginx
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-backend
+  namespace: ns-example
+  labels:
+    role: backend
+spec:
+  containers:
+  - name: example-backend
+    image: praqma/network-multitool
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:  
+#   name: frontend-service
+#   namespace: ns-example
+#   labels:
+#     role: frontend-service
+# spec:
+#   selector:    
+#     role: frontend
+#   ports:  
+#   - name: frontend-port
+#     port: 80
+#     targetPort: 80
+#     protocol: TCP
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:  
+#   name: backend-service
+#   namespace: ns-example
+#   labels:
+#     role: backend-service
+# spec:
+#   selector:    
+#     role: backend
+#   ports:  
+#   - name: backend-port
+#     port: 80
+#     targetPort: 80
+#     protocol: TCP
