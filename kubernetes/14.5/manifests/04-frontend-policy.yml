@@ -10,17 +10,8 @@ spec:
       role: frontend
   policyTypes:
     - Ingress
-    - Egress
   ingress:
     - from:
-      - podSelector:
-          matchLabels:
-            role: backend
-      ports:
-        - protocol: TCP
-          port: 80
-  egress:
-    - to:
       - podSelector:
           matchLabels:
             role: backend
